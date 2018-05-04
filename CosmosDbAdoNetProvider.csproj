@@ -13,6 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,13 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CosmosDbProviderFactory.cs" />
     <Compile Include="CosmosDbSqlCommand.cs" />
     <Compile Include="CosmosDbSqlConnection.cs" />
     <Compile Include="CosmosDbSqlDataAdapter.cs" />
     <Compile Include="CosmosDbSqlDataReader.cs" />
     <Compile Include="CosmosDbSqlParameter.cs" />
     <Compile Include="CosmosDbSqlParameterCollection.cs" />
+    <Compile Include="CosmosDbSqlProviderFactory.cs" />
     <Compile Include="NotImplementedPartials\CosmosDbSqlCommand.cs" />
     <Compile Include="NotImplementedPartials\CosmosDbSqlConnection.cs" />
     <Compile Include="NotImplementedPartials\CosmosDbSqlDataReader.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

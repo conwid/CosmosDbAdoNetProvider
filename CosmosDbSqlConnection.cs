@@ -16,7 +16,7 @@ namespace CosmosDbAdoNetProvider
         private string databaseName;
         private string serviceUri;
         private string authKey;
-        public readonly DocumentClient client;
+        public DocumentClient Client { get; }
 
         private const string accountEndpointString = "AccountEndpoint";
         private const string accountKeyString = "AccountKey";
@@ -102,7 +102,7 @@ namespace CosmosDbAdoNetProvider
             this.databaseName = databaseName;
             this.authKey = authKey;
             this.serviceUri = serviceUri;
-            this.client = new DocumentClient(new Uri(serviceUri), authKey);
+            this.Client = new DocumentClient(new Uri(serviceUri), authKey);
         }
 
         public override Task OpenAsync(CancellationToken cancellationToken)
@@ -114,7 +114,7 @@ namespace CosmosDbAdoNetProvider
         public override void Close()
         {
             this.isOpen = false;
-            this.client?.Dispose();
+            this.Client?.Dispose();
         }
 
         public override void ChangeDatabase(string databaseName)
