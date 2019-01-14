@@ -28,6 +28,11 @@ namespace CosmosDbAdoNetProvider
 
         }
 
+        public CosmosDbSqlConnection(string connectionString) : base()
+        {
+            ProcessConnectionString(connectionString);
+        }
+
         private void ProcessConnectionString(string connectionString)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -38,64 +43,21 @@ namespace CosmosDbAdoNetProvider
             authKey = parts.Single(p => p.StartsWith(accountKeyString)).Split(keyValueSeparator)[1];
             databaseName = parts.Single(p => p.StartsWith(dataBaseString)).Split(keyValueSeparator)[1];
         }
-
-        public CosmosDbSqlConnection(string connectionString) : base()
-        {
-            ProcessConnectionString(connectionString);
-        }
-
+       
         public override string ConnectionString
         {
-            get
-            {
-                return $"{accountEndpointString}{keyValueSeparator}{serviceUri};{accountKeyString}{keyValueSeparator}{authKey};{dataBaseString}{keyValueSeparator}{databaseName};";
-            }
-
-            set
-            {
-                ProcessConnectionString(value);
-            }
+            get => $"{accountEndpointString}{keyValueSeparator}{serviceUri};{accountKeyString}{keyValueSeparator}{authKey};{dataBaseString}{keyValueSeparator}{databaseName};";
+            set => ProcessConnectionString(value);
         }
 
-        public override string Database
-        {
-            get
-            {
-                return databaseName;
-            }
-        }
+        public override string Database => databaseName;
 
-        public override string DataSource
-        {
-            get
-            {
-                return serviceUri;
-            }
-        }
+        public override string DataSource => serviceUri;
 
-        public override string ServerVersion
-        {
-            get
-            {
-                return "1.0";
-            }
-        }
+        public override string ServerVersion => "1.0";
 
         private bool isOpen = false;
-        public override ConnectionState State
-        {
-            get
-            {
-                if (isOpen)
-                {
-                    return ConnectionState.Open;
-                }
-                else
-                {
-                    return ConnectionState.Closed;
-                }
-            }
-        }
+        public override ConnectionState State => isOpen ? ConnectionState.Open : ConnectionState.Closed;
 
         public CosmosDbSqlConnection(string serviceUri, string authKey, string databaseName) : base()
         {
@@ -109,7 +71,7 @@ namespace CosmosDbAdoNetProvider
         {
             this.Open();
             return Task.CompletedTask;
-        }        
+        }
 
         public override void Close()
         {
@@ -117,19 +79,10 @@ namespace CosmosDbAdoNetProvider
             this.Client?.Dispose();
         }
 
-        public override void ChangeDatabase(string databaseName)
-        {
-            this.databaseName = databaseName;
-        }
+        public override void ChangeDatabase(string databaseName) => this.databaseName = databaseName;
 
-        protected override DbCommand CreateDbCommand()
-        {
-            return new CosmosDbSqlCommand(this);
-        }
+        protected override DbCommand CreateDbCommand() => new CosmosDbSqlCommand(this);
 
-        public override void Open()
-        {
-            this.isOpen = true;
-        }
+        public override void Open() => this.isOpen = true;
     }
 }
